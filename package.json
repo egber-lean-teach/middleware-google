@@ -1,0 +1,27 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "private": true,
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "g-basic": "npx ts-node ./examples/google/basic.ts",
+    "g-streaming": "npx ts-node ./examples/google/streaming.ts",
+    "g-embedding": "npx ts-node ./examples/google/embedding.ts",
+    "g-enhanced": "npx ts-node ./examples/google/enhanced.ts",
+    "entry-google": "npx ts-node packages/google/src/index.ts",
+    "vertex-google": "npx ts-node packages/vertex/src/index.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

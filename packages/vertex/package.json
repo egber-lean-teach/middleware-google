@@ -1,0 +1,14 @@
+{
+  "name": "@tuscope/vertex",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/vertexai": "^1.10.0",
+    "@tuscope/core": "1.0.0"
+  }
+}

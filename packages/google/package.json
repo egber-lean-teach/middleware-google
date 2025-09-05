@@ -1,0 +1,14 @@
+{
+  "name": "@tuscope/google",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@tuscope/core": "1.0.0"
+  }
+}
