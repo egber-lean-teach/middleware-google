@@ -17,6 +17,7 @@
     "g-streaming": "npx ts-node ./examples/google/streaming.ts",
     "g-embedding": "npx ts-node ./examples/google/embedding.ts",
     "g-enhanced": "npx ts-node ./examples/google/enhanced.ts",
+    "v-basic": "npx ts-node ./examples/vertex/basic.ts",
     "entry-google": "npx ts-node packages/google/src/index.ts",
     "vertex-google": "npx ts-node packages/vertex/src/index.ts"
   },

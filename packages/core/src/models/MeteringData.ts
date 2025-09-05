@@ -13,25 +13,38 @@ import {
   MIDDLEWARE_SOURCE,
   PRODUCT_ID_FREE,
   PROVIDER_GOOGLE,
+  VERTEXT_AGENT,
 } from "../utils/constants/constants";
+import { IModel } from "../types/model";
 
 export class Metering {
   apiKey: string;
   baseUrl: string;
+  type: IModel;
 
-  constructor(clientApiKey?: string, baseUrl?: string) {
+  constructor({
+    clientApiKey,
+    baseUrl,
+    type,
+  }: {
+    clientApiKey?: string;
+    baseUrl?: string;
+    type?: IModel;
+  } = {}) {
     this.apiKey = clientApiKey ?? process.env.REVENIUM_METERING_API_KEY ?? "";
     this.baseUrl = baseUrl ?? process.env.REVENIUM_METERING_BASE_URL ?? "";
+    this.type = type ?? "google";
   }
   public createMeteringRequest(
     metering: IMeteringRequest
   ): IMeteringDataRequest {
+    const agent = this.type === "google" ? GOOGLE_AGENT : VERTEXT_AGENT;
     return {
       stopReason: metering.stopReason,
       costType: COST_TYPE,
       isStreamed: false,
       taskType: COST_TYPE,
-      agent: GOOGLE_AGENT,
+      agent,
       operationType: metering.operationType.toString(),
       inputTokenCount: metering.tokenCounts.inputTokens,
       outputTokenCount: metering.tokenCounts.outputTokens,
@@ -43,7 +56,7 @@ export class Metering {
       productId: PRODUCT_ID_FREE,
       subscriber: {
         id: `user-${generateTransactionId()}`,
-        email: `user-@${GOOGLE_AGENT.toLowerCase()}.ai`,
+        email: `user-@${agent.toLowerCase()}.ai`,
         credential: CURRENT_CREDENTIAL,
       },
       model: metering.modelName,

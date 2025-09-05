@@ -1,8 +1,17 @@
 import { logger } from "../models/Logger";
 import { safeExtract } from "./safeExtract";
-import { EmbedContentResponse, GenerateContentResult } from "@google/generative-ai";
+import {
+  EmbedContentResponse,
+  GenerateContentResult,
+} from "@google/generative-ai";
+import { GenerateContentResult as VertexGenerateContentResult } from "@google-cloud/vertexai";
 
-export function extractStopReason(response: GenerateContentResult | EmbedContentResponse  ): string {
+export function extractStopReason(
+  response:
+    | GenerateContentResult
+    | EmbedContentResponse
+    | VertexGenerateContentResult
+): string {
   try {
     // Try to extract from different possible locations
     const stopReason =

@@ -18,6 +18,8 @@ import {
   extractModelName,
   ESTIMATED_TOKEN_COUNTS,
   calculateDurationMs,
+  verifyMeteringConfig,
+  verifyApiKey,
 } from "../../../core/src/utils";
 import {
   IStreamWrapperRequest,
@@ -65,7 +67,7 @@ export class GoogleAiReveniumMiddleware {
     requestOptions?: SingleRequestOptions
   ) => {
     logger.info("--- Middleware actived ---");
-    if (!this.verifyApiKey() || !this.verifyMeteringConfig()) return;
+    if (!verifyApiKey() || !verifyMeteringConfig()) return;
     const startTime: Date = new Date();
 
     try {
@@ -103,7 +105,7 @@ export class GoogleAiReveniumMiddleware {
     request: GenerateContentRequest | string | Array<string | Part>,
     requestOptions?: SingleRequestOptions
   ) => {
-    if (!this.verifyApiKey() || !this.verifyMeteringConfig()) return;
+    if (!verifyApiKey() || !verifyMeteringConfig()) return;
     const startTime: Date = new Date();
     const transactionId: string = generateTransactionId();
     const usageMetadata = {};
@@ -228,7 +230,7 @@ export class GoogleAiReveniumMiddleware {
     request: string | (string | Part)[] | EmbedContentRequest,
     requestOptions?: SingleRequestOptions
   ) => {
-    if (!this.verifyApiKey() || !this.verifyMeteringConfig()) return;
+    if (!verifyApiKey() || !verifyMeteringConfig()) return;
     logger.info("Google AI embedContent called");
     const startTime: Date = new Date();
     const transactionId = generateTransactionId();
@@ -264,27 +266,5 @@ export class GoogleAiReveniumMiddleware {
       });
       throw error;
     }
-  };
-
-  private verifyApiKey = () => {
-    if (!this.apikey) {
-      logger.warning("❌ GOOGLE_API_KEY not found");
-      logger.warning("   Set: export GOOGLE_API_KEY=your-google-api-key");
-      return false;
-    }
-    return true;
-  };
-
-  private verifyMeteringConfig = () => {
-    if (
-      !process.env.REVENIUM_METERING_API_KEY ||
-      !process.env.REVENIUM_METERING_BASE_URL
-    ) {
-      logger.warning(
-        "❌ REVENIUM_METERING_API_KEY or REVENIUM_METERING_BASE_URL not found"
-      );
-      return false;
-    }
-    return true;
   };
 }
